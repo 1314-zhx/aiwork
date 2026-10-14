@@ -1,0 +1,71 @@
+syntax = "v1"
+
+type (
+    ChatReq {
+        Prompts    string   `json:"prompts,omitempty"`
+        ChatType   int      `json:"chatType,omitempty"`
+        RelationId int      `json:"relationId,omitempty"`
+        StartTime   int64   `json:"startTime,omitempty"`
+        EndTime     int64   `json:"endTime,omitempty"`
+        Voice       string `json:"voice,omitempty"`
+    }
+    ChatResp {
+        ChatType    int            `json:"chatType"`
+        Data        interface{}    `json:"data"`
+    }
+    ChatConfirmReq {
+        ChatType    int            `json:"chatType"`
+        Data        interface{}    `json:"data,omitempty"`
+        Todo        interface{}    `json:"todo,omitempty"`
+        Approval    interface{}    `json:"approval,omitempty"`
+    }
+    FileResp {
+        Host        string      `json:"host"`
+        File        string      `json:"file"`
+        Filename    string      `json:"filename"`
+    }
+    FileListResp {
+        List []*FileResp    `json:"list"`
+    }
+)
+
+@server(
+    group: v1/chat
+    logic: Chat
+    middleware: Jwt
+)
+service chat {
+    @server(
+        handler: Chat
+        logic: Chat.AIChat
+    )
+    post /(ChatReq) returns(ChatResp)
+
+    @server(
+        handler: Confirm
+        logic: Chat.Confirm
+        name: 用户确认提交后落库
+    )
+    post /confirm(ChatConfirmReq) returns(IdResp)
+}
+
+
+@server(
+    group: v1/upload
+    logic: Chat
+    middleware: Jwt
+)
+service Upload {
+    @server(
+        handler: File
+        name: 上传单个文件
+        logic: Chat.File
+    )
+    post /file returns(FileResp)
+
+    @server(
+        handler: Multiplefiles
+        name: 批量上传文件
+    )
+    post /multiplefiles returns(FileListResp)
+}

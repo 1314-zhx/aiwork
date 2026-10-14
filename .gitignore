@@ -1,0 +1,30 @@
+# secrets and local config
+etc/api.yaml
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+
+# runtime
+upload/
+*.exe
+*.log
+tmp/
+_tmp*/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+*.mp3
+*.wav
+
+# tests / coverage
+coverage.out
+*.test
+
+# Go
+vendor/
+bin/
+dist/

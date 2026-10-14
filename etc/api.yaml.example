@@ -1,0 +1,42 @@
+Name: api
+Addr: 0.0.0.0:8888
+Host: "http://127.0.0.1:8888"
+Static:
+  Path: "./frontend"
+Ws:
+  Addr: 0.0.0.0:9000
+Mongo:
+  User: ""
+  Password: ""
+  Hosts: ["127.0.0.1"]
+  Port: 27017
+  Database: "aiworkc"
+MysqlDns: "root:YOUR_PASSWORD@tcp(127.0.0.1:3306)/aiworkc"
+MysqlReadDns: "root:YOUR_PASSWORD@tcp(127.0.0.1:3306)/aiworkc"
+CORS:
+  AllowOrigins:
+    - "http://127.0.0.1:8000"
+    - "http://localhost:8000"
+    - "http://127.0.0.1:8888"
+    - "http://localhost:8888"
+Security:
+  AllowDefaultRoot: true
+Jwt:
+  Secret: "change-me-in-production"
+  Expire: 8640000
+Tlog:
+  Mode: 1
+  Label: "aiworkc"
+Langchain:
+  Url:  "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  ApiKey: "YOUR_DASHSCOPE_API_KEY"
+  RerankModel: "qwen3-rerank"
+  RerankUrl: ""
+AliGPT:
+  Url:  "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  ApiKey: "YOUR_DASHSCOPE_API_KEY"
+Upload:
+  SavePath: "upload/"
+  Host: "http://127.0.0.1:8888"
+Redis:
+  Addr: "127.0.0.1:16379"
